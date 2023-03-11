@@ -123,6 +123,7 @@ esp_err_t Webhook::send_message(const char *message) {
 	memcpy(data, R"({"content":")", 13);
 	memcpy(data+12, message, msg_len+1);
 	memcpy(data+msg_len+12, R"("})", 3);
+	ESP_LOGD(TAG, "Data Content: %s", data);
 
 	// Set up and perform the request
 	esp_http_client_set_method(client, HTTP_METHOD_POST);

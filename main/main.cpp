@@ -54,7 +54,7 @@ void app_main(){
 			last_time_oclock = timeinfo.tm_yday;
 		}
 		if(timeinfo.tm_yday != last_friday && timeinfo.tm_wday == 5 && timeinfo.tm_hour == 18){
-			friday_night_webhook.send_message("Friday at last...\n"
+			friday_night_webhook.send_message("Friday at last... "
 											  "https://www.youtube.com/watch?v=DfEnIFV2-mc");
 			last_friday = timeinfo.tm_yday;
 		}
