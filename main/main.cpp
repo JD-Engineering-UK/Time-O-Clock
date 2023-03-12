@@ -8,6 +8,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "webhook.h"
+#include "wifi.h"
 
 #include "main.h"
 
@@ -31,7 +32,9 @@ void app_main(){
 	ESP_LOGI(TAG, "TCP/IP Stack enabled.");
 	ESP_ERROR_CHECK( esp_event_loop_create_default() );
 	initialise_ntp();
-	wifi_init_sta();
+//	wifi_init_sta();
+	Wifi::add_ap(CONFIG_ESP_WIFI_SSID, CONFIG_ESP_WIFI_PASSWORD);
+	Wifi::start();
 	wait_for_updated_time();
 	Webhook time_oclock_webhook = Webhook(CONFIG_TIME_OCLOCK_WEBHOOK);
 	Webhook friday_night_webhook = Webhook(CONFIG_FRIDAY_NIGHT_WEBHOOK);
