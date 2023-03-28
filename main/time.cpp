@@ -62,6 +62,8 @@ static void print_servers(void)
 
 void initialise_ntp(){
 	ESP_LOGI(TAG, "Initializing SNTP");
+	setenv("TZ", "BST0GMT,M3.2.0/2:00:00,M11.1.0/2:00:00",1);
+	tzset();
 	esp_sntp_config_t config = {
 		.smooth_sync=true,
 		.server_from_dhcp=false,
