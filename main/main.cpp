@@ -2,6 +2,7 @@
 #include <ctime>
 #include <esp_netif.h>
 #include <esp_event.h>
+#include <esp_random.h>
 #include "esp_system.h"
 #include "esp_log.h"
 #include "nvs_flash.h"
@@ -11,12 +12,26 @@
 #include "wifi.h"
 
 #include "main.h"
+#include "messages.h"
 
 static const char *TAG = "Time O'Clock";
 
 extern "C"{
 	void app_main();
 }
+
+
+const char* pick_message(){
+	uint32_t num = esp_random();
+	int idx = 0;
+	while(num > messages[idx].weight){
+		num -= messages[idx].weight;
+		idx++;
+		idx %= messages_count;
+	}
+	return messages[idx].msg;
+}
+
 
 void app_main(){
 	printf("Hello world!\n");
@@ -53,7 +68,8 @@ void app_main(){
 		}
 		ESP_LOGI("Time O'Clock", "Current Time: %s", time_str);
 		if(timeinfo.tm_yday != last_time_oclock && timeinfo.tm_hour == 21){
-			time_oclock_webhook.send_message("Hey guys! It's time o'clock!");
+
+			time_oclock_webhook.send_message(pick_message());
 			last_time_oclock = timeinfo.tm_yday;
 		}
 		if(timeinfo.tm_yday != last_friday && timeinfo.tm_wday == 5 && timeinfo.tm_hour == 18){
