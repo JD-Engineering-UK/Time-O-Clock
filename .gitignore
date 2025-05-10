@@ -37,3 +37,8 @@ build/
 
 sdkconfig
 sdkconfig.old
+.vscode/settings.json
+
+
+wifi_deets.json
+wifi_deets.bin
