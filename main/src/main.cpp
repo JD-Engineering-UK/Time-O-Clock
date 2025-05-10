@@ -49,12 +49,12 @@ void app_main(){
 	initialise_ntp();
 //	wifi_init_sta();
 	Wifi::start();
-	wait_for_updated_time();
 	Webhook time_oclock_webhook = Webhook(CONFIG_TIME_OCLOCK_WEBHOOK);
 	Webhook friday_night_webhook = Webhook(CONFIG_FRIDAY_NIGHT_WEBHOOK);
 	char time_str[17];
 	int last_time_oclock = -1;
 	int last_friday = -1;
+	wait_for_updated_time();
 	while(1) {
 		time_t now;
 		struct tm timeinfo;

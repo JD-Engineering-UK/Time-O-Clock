@@ -62,7 +62,7 @@ static void print_servers(void)
 
 void initialise_ntp(){
 	ESP_LOGI(TAG, "Initializing SNTP");
-	setenv("TZ", "BST0GMT,M3.2.0/2:00:00,M11.1.0/2:00:00",1);
+	setenv("TZ", "GMT0BST,M3.5.0/1,M10.5.0",1);
 	tzset();
 	esp_sntp_config_t config = {
 		.smooth_sync=true,
@@ -83,7 +83,7 @@ void initialise_ntp(){
 void wait_for_updated_time(){
 	int retry_count=10;
 	int retry=0;
-	while (esp_netif_sntp_sync_wait(2000 / portTICK_PERIOD_MS) == ESP_ERR_TIMEOUT && ++retry < retry_count) {
+	while (esp_netif_sntp_sync_wait(10000 / portTICK_PERIOD_MS) == ESP_ERR_TIMEOUT && retry++ < retry_count) {
 		ESP_LOGI(TAG, "Waiting for system time to be set... (%d/%d)", retry, retry_count);
 	}
 }
